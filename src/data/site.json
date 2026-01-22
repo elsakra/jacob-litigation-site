@@ -1,0 +1,84 @@
+{
+  "company": {
+    "name": "Jacob Litigation",
+    "tagline": "A Civil Rights Law Firm",
+    "description": "Jacob Litigation is a civil rights law firm serving persons who have experienced police misconduct, and the estates of persons who have been unlawfully killed by law enforcement personnel or correctional personnel. Founded by Devon M. Jacob, who has over 20 years of proven civil rights litigation experience and is uniquely qualified as a former police officer turned civil rights attorney.",
+    "phone": "(717) 796-7733",
+    "email": "djacob@jacoblitigation.com",
+    "address": "P.O. Box 837, Mechanicsburg, PA 17055-0837",
+    "hours": null
+  },
+  "branding": {
+    "logo": "https://res.cloudinary.com/dil14r8je/image/upload/v1769106481/auto-site-builder/Jacob%20Litigation/image_0.png",
+    "primaryColor": "#1e3a5f",
+    "secondaryColor": null
+  },
+  "hero": {
+    "headline": "Are you currently represented by a national civil rights lawyer who is a former police officer?",
+    "subheadline": "If not, you should be! Jacob Litigation specializes in civil rights, police brutality, malicious prosecution, and wrongful death cases.",
+    "cta": {
+      "label": "Contact Us",
+      "href": "/contact"
+    },
+    "secondaryCta": null,
+    "backgroundImage": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1920&h=1080&fit=crop&q=80",
+    "imageOpacity": 35
+  },
+  "sections": {
+    "about": {
+      "headline": "About Jacob Litigation",
+      "content": "Jacob Litigation is founded by Devon M. Jacob, who, since 2002, has successfully practiced law in the areas of civil rights, police brutality, malicious prosecution, and wrongful death. He routinely handles complex federal litigation involving serious injury or death with exposures in excess of $1 million. Mr. Jacob is distinctly qualified to serve his clients, having graduated from the police academy, served as a police officer, and having spent almost a decade defending law enforcement personnel, municipalities and cities, and the Commonwealth, in civil rights actions. Unlike other attorneys in the industry, Mr. Jacob has extensive practical experience and brings law enforcement and insurance industry knowledge to the table.",
+      "image": "https://res.cloudinary.com/dil14r8je/image/upload/v1769106481/auto-site-builder/Jacob%20Litigation/image_2.jpg",
+      "values": [
+        {
+          "title": "Former Police Officer",
+          "description": "Unique perspective from law enforcement background"
+        },
+        {
+          "title": "National Practice",
+          "description": "Handles cases anywhere in the nation"
+        },
+        {
+          "title": "Complex Litigation",
+          "description": "Specializes in cases with exposures over $1 million"
+        }
+      ]
+    },
+    "services": {
+      "headline": "Practice Areas"
+    },
+    "team": {
+      "headline": "Our Attorney"
+    },
+    "testimonials": {
+      "headline": "What Our Clients Say"
+    },
+    "contact": {
+      "headline": "Contact Us"
+    }
+  },
+  "navigation": {
+    "items": [
+      {
+        "label": "Home",
+        "href": "/contact"
+      }
+    ],
+    "ctaButton": {
+      "label": "Call Now",
+      "href": "/contact"
+    }
+  },
+  "footer": {
+    "copyright": "© 2024 Jacob Litigation. All rights reserved.",
+    "socialLinks": {
+      "facebook": null
+    }
+  },
+  "seo": {
+    "title": "Jacob Litigation | A Civil Rights Law Firm",
+    "description": null
+  },
+  "theme": "light",
+  "vibe": "community"
+}

@@ -1,0 +1,333 @@
+---
+import siteData from '@/data/site.json';
+const { navigation, company, branding } = siteData;
+const currentPath = Astro.url.pathname;
+
+// Accept prop for pages with light-colored hero sections
+interface Props {
+  lightHero?: boolean;
+}
+const { lightHero = false } = Astro.props;
+---
+
+<header class:list={["fixed top-0 left-0 right-0 z-50 transition-all duration-300", lightHero && "header-light-page"]} id="main-header">
+  <!-- Permanent top scrim for logo visibility on any background -->
+  <div class="header-scrim absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-transparent pointer-events-none transition-opacity duration-300"></div>
+  <nav class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="logo-wrap flex items-center gap-3 relative z-50">
+        {branding?.logo?.startsWith('http') ? (
+          <span class="logo-badge inline-flex items-center px-3 py-2 rounded-md transition-all duration-300">
+            <img 
+              src={branding.logo} 
+              alt={company.name} 
+              class="h-8 w-auto header-logo transition-all duration-300" 
+            />
+          </span>
+        ) : (
+          <span class="font-display text-2xl font-semibold header-text transition-all duration-300">
+            {company.name}
+          </span>
+        )}
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-8">
+        {navigation.items.map((item) => (
+          <a 
+            href={item.href}
+            class:list={[
+              "text-sm font-medium transition-colors header-link",
+              currentPath === item.href ? "text-primary-500" : ""
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+      
+      <!-- Right side: Search + Menu -->
+      <div class="flex items-center gap-4 relative z-50">
+        <!-- Search Button -->
+        <button 
+          type="button"
+          class="p-2 header-icon transition-colors"
+          aria-label="Search"
+          id="search-toggle"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        
+        <!-- Menu Button -->
+        <button 
+          type="button"
+          class="p-2 header-icon transition-colors"
+          aria-label="Open menu"
+          id="menu-toggle"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="menu-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16" />
+          </svg>
+          <svg class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="close-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Search Overlay -->
+  <div class="fixed inset-0 bg-charcoal-950/98 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300" id="search-overlay">
+    <div class="max-w-3xl mx-auto px-6 pt-32">
+      <form class="relative" id="search-form">
+        <input 
+          type="search" 
+          placeholder="Search..." 
+          class="w-full bg-transparent border-b-2 border-neutral-700 text-white text-2xl md:text-4xl py-4 focus:outline-none focus:border-primary-500 placeholder-neutral-500 transition-colors"
+          id="search-input"
+        />
+        <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white transition-colors">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </form>
+      <p class="text-neutral-500 text-sm mt-6">Press ESC to close</p>
+    </div>
+  </div>
+  
+  <!-- Menu Overlay -->
+  <div class="fixed inset-0 bg-charcoal-950 z-40 hidden opacity-0 transition-opacity duration-300" id="menu-overlay">
+    <div class="h-full overflow-y-auto pt-24 pb-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-24">
+          <!-- Main Navigation -->
+          <div>
+            <nav class="space-y-1">
+              {navigation.items.map((item, index) => (
+                <a 
+                  href={item.href}
+                  class="group block py-3 border-b border-neutral-800 hover:border-primary-500 transition-colors"
+                  style={`animation-delay: ${index * 50}ms`}
+                >
+                  <span class="flex items-center justify-between">
+                    <span class="font-display text-3xl md:text-4xl text-white group-hover:text-primary-500 transition-colors">
+                      {item.label}
+                    </span>
+                    <svg class="w-6 h-6 text-neutral-600 group-hover:text-primary-500 group-hover:translate-x-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                </a>
+              ))}
+              
+              <!-- Additional menu items - Services/Practice Areas -->
+              <a href="/services" class="group block py-3 border-b border-neutral-800 hover:border-primary-500 transition-colors">
+                <span class="flex items-center justify-between">
+                  <span class="font-display text-3xl md:text-4xl text-white group-hover:text-primary-500 transition-colors">
+                    Practice Areas
+                  </span>
+                  <svg class="w-6 h-6 text-neutral-600 group-hover:text-primary-500 group-hover:translate-x-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </a>
+              
+              <!-- Resources -->
+              <a href="/resources" class="group block py-3 border-b border-neutral-800 hover:border-primary-500 transition-colors">
+                <span class="flex items-center justify-between">
+                  <span class="font-display text-3xl md:text-4xl text-white group-hover:text-primary-500 transition-colors">
+                    Resources
+                  </span>
+                  <svg class="w-6 h-6 text-neutral-600 group-hover:text-primary-500 group-hover:translate-x-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </a>
+            </nav>
+          </div>
+          
+          <!-- Contact Info -->
+          <div class="lg:pt-8">
+            <div class="space-y-8">
+              <div>
+                <p class="text-neutral-500 text-sm uppercase tracking-wider mb-3">Contact</p>
+                <a href={`tel:${company.phone}`} class="block text-xl text-white hover:text-primary-500 transition-colors">
+                  {company.phone}
+                </a>
+                <a href={`mailto:${company.email}`} class="block text-xl text-white hover:text-primary-500 transition-colors mt-2">
+                  {company.email}
+                </a>
+              </div>
+              
+              {company.address && (
+                <div>
+                  <p class="text-neutral-500 text-sm uppercase tracking-wider mb-3">Location</p>
+                  <address class="text-lg text-neutral-300 not-italic leading-relaxed">
+                    {typeof company.address === 'string' ? (
+                      <p>{company.address}</p>
+                    ) : (
+                      <>
+                        {company.address?.street && <p>{company.address.street}</p>}
+                        {(company.address?.city || company.address?.state || company.address?.zip) && (
+                          <p>
+                            {company.address?.city}{company.address?.city && company.address?.state ? ', ' : ''}
+                            {company.address?.state} {company.address?.zip}
+                          </p>
+                        )}
+                      </>
+                    )}
+                  </address>
+                </div>
+              )}
+              
+              {navigation.ctaButton && (
+                <a 
+                  href={navigation.ctaButton.href}
+                  class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 text-white text-lg font-semibold hover:bg-primary-600 transition-colors"
+                >
+                  {navigation.ctaButton.label}
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Default state - white text for dark backgrounds with scrim */
+  .header-text { color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .header-link { color: rgba(255, 255, 255, 0.9); text-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .header-link:hover { color: white; }
+  .header-icon { color: rgba(255, 255, 255, 0.9); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
+  .header-icon:hover { color: white; }
+  .header-logo { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+  .logo-wrap { background: transparent; }
+  .logo-badge { background: rgba(255,255,255,0.95); box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .header-scrim { opacity: 1; }
+  
+  /* Light page state - dark text for pages with light hero backgrounds */
+  .header-light-page .header-text { color: #18181B; text-shadow: none; }
+  .header-light-page .header-link { color: #525252; text-shadow: none; }
+  .header-light-page .header-link:hover { color: #18181B; }
+  .header-light-page .header-icon { color: #525252; filter: none; }
+  .header-light-page .header-icon:hover { color: #18181B; }
+  .header-light-page .header-logo { filter: none; }
+  .header-light-page .logo-badge { background: transparent; box-shadow: none; }
+  .header-light-page .header-scrim { opacity: 0; }
+  
+  /* Scrolled state - dark text for white background, hide scrim */
+  .header-scrolled .header-text { color: #18181B; text-shadow: none; }
+  .header-scrolled .header-link { color: #525252; text-shadow: none; }
+  .header-scrolled .header-link:hover { color: #18181B; }
+  .header-scrolled .header-icon { color: #525252; filter: none; }
+  .header-scrolled .header-icon:hover { color: #18181B; }
+  .header-scrolled .header-logo { filter: none; }
+  .header-scrolled .logo-badge { background: transparent; box-shadow: none; }
+  .header-scrolled .header-scrim { opacity: 0; }
+  .header-scrolled { background-color: rgba(255, 255, 255, 0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  
+  /* Menu open state - always white text on dark overlay */
+  .menu-open .header-text { color: white !important; text-shadow: none !important; }
+  .menu-open .header-link { color: rgba(255, 255, 255, 0.8) !important; text-shadow: none !important; }
+  .menu-open .header-icon { color: rgba(255, 255, 255, 0.8) !important; filter: none !important; }
+  .menu-open .header-logo { filter: none !important; }
+  .menu-open .logo-badge { background: rgba(255,255,255,0.95) !important; }
+  .menu-open .header-scrim { opacity: 0 !important; }
+  .menu-open { background-color: transparent !important; box-shadow: none !important; }
+</style>
+
+<script>
+  const header = document.getElementById('main-header');
+  const searchToggle = document.getElementById('search-toggle');
+  const searchOverlay = document.getElementById('search-overlay');
+  const searchInput = document.getElementById('search-input');
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  
+  let menuOpen = false;
+  let searchOpen = false;
+  
+  // Scroll behavior
+  function handleScroll() {
+    if (!menuOpen && !searchOpen) {
+      if (window.scrollY > 50) {
+        header?.classList.add('header-scrolled');
+      } else {
+        header?.classList.remove('header-scrolled');
+      }
+    }
+  }
+  
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+  
+  // Search toggle
+  searchToggle?.addEventListener('click', () => {
+    searchOpen = !searchOpen;
+    if (searchOpen) {
+      searchOverlay?.classList.remove('hidden');
+      setTimeout(() => searchOverlay?.classList.remove('opacity-0'), 10);
+      searchInput?.focus();
+      document.body.style.overflow = 'hidden';
+    } else {
+      searchOverlay?.classList.add('opacity-0');
+      setTimeout(() => searchOverlay?.classList.add('hidden'), 300);
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Menu toggle
+  menuToggle?.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    if (menuOpen) {
+      menuOverlay?.classList.remove('hidden');
+      setTimeout(() => menuOverlay?.classList.remove('opacity-0'), 10);
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      header?.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      menuOverlay?.classList.add('opacity-0');
+      setTimeout(() => menuOverlay?.classList.add('hidden'), 300);
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      header?.classList.remove('menu-open');
+      document.body.style.overflow = '';
+      handleScroll();
+    }
+  });
+  
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (searchOpen) {
+        searchOpen = false;
+        searchOverlay?.classList.add('opacity-0');
+        setTimeout(() => searchOverlay?.classList.add('hidden'), 300);
+        document.body.style.overflow = '';
+      }
+      if (menuOpen) {
+        menuOpen = false;
+        menuOverlay?.classList.add('opacity-0');
+        setTimeout(() => menuOverlay?.classList.add('hidden'), 300);
+        menuIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+        header?.classList.remove('menu-open');
+        document.body.style.overflow = '';
+        handleScroll();
+      }
+    }
+  });
+</script>

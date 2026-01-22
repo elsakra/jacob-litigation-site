@@ -1,0 +1,36 @@
+{
+  "id": "legal-firm",
+  "name": "Legal Firm (Cooley)",
+  "industry": "legal",
+  "tags": ["law", "attorney", "litigation", "corporate", "defense", "practice-areas", "thought-leadership", "big-law", "estate", "elder", "probate", "family"],
+  "description": "Premium law firm template inspired by Cooley.com. Features full-bleed video hero, news carousel (big-law) or resources grid (boutique), tabbed practices, insights feed, and mega-nav with search overlay. Navy blue color scheme with sophisticated serif typography. Works for big-law and boutique firms.",
+  "status": "approved",
+  "heroMedia": "either",
+  "pages": [
+    "index",
+    "about",
+    "services",
+    "services/[slug]",
+    "case-results",
+    "case-results/[slug]",
+    "blog",
+    "blog/[slug]",
+    "contact",
+    "faq",
+    "resources",
+    "privacy",
+    "terms"
+  ],
+  "contentCollections": [
+    "team",
+    "services",
+    "blog",
+    "testimonials",
+    "faq",
+    "case-results"
+  ],
+  "previewUrl": null,
+  "sourceInspiration": "https://www.cooley.com/",
+  "createdAt": "2026-01-19",
+  "updatedAt": "2026-01-20"
+}

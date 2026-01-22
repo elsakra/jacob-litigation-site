@@ -1,0 +1,110 @@
+---
+interface NewsItem {
+  headline: string;
+  href: string;
+  type?: string;
+  date?: string;
+}
+
+interface Props {
+  items: NewsItem[];
+  headline?: string;
+}
+
+const { items, headline = "What Matters" } = Astro.props;
+
+// Format date if provided
+function formatDate(dateStr?: string): string {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+// Limit to 4 items for the grid
+const displayItems = items.slice(0, 4);
+---
+
+<section class="bg-white py-20 lg:py-28 border-b border-neutral-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Section Header - Cooley editorial style -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12" data-reveal>
+      <div>
+        <div class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-neutral-500 mb-4">
+          <span class="h-[3px] w-8 bg-primary-500"></span>
+          <span>Firm News</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-charcoal-950 tracking-[-0.02em]">
+          {headline}
+        </h2>
+      </div>
+      
+      <!-- Navigation arrows (visual only, for Cooley aesthetic) -->
+      <div class="flex items-center gap-3">
+        <button type="button" class="w-12 h-12 rounded-full border-2 border-neutral-200 flex items-center justify-center text-neutral-400 hover:border-primary-500 hover:text-primary-500 transition-colors" aria-label="Previous">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button type="button" class="w-12 h-12 rounded-full border-2 border-neutral-200 flex items-center justify-center text-neutral-400 hover:border-primary-500 hover:text-primary-500 transition-colors" aria-label="Next">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- News Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" data-reveal-stagger>
+      {displayItems.map((item) => (
+        <a 
+          href={item.href}
+          class="group block"
+        >
+          <article class="h-full flex flex-col">
+            <!-- Card Header with red accent on hover -->
+            <div class="relative pb-6 mb-6 border-b-2 border-neutral-200 group-hover:border-primary-500 transition-colors">
+              <h3 class="font-display text-xl lg:text-2xl text-charcoal-950 group-hover:text-primary-600 transition-colors leading-tight pr-8">
+                {item.headline}
+              </h3>
+              <!-- Arrow indicator -->
+              <div class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+            
+            <!-- Card Footer -->
+            <div class="mt-auto flex items-center justify-between text-sm">
+              {item.type && (
+                <span class="text-primary-500 font-medium uppercase tracking-wider text-xs">
+                  {item.type}
+                </span>
+              )}
+              {item.date && (
+                <span class="text-neutral-400">
+                  {formatDate(item.date)}
+                </span>
+              )}
+              {!item.type && !item.date && (
+                <span class="text-neutral-400">Read more</span>
+              )}
+            </div>
+          </article>
+        </a>
+      ))}
+    </div>
+    
+    <!-- View All Link (if more than 4 items) -->
+    {items.length > 4 && (
+      <div class="mt-12 text-center" data-reveal>
+        <a href="/news" class="inline-flex items-center gap-2 text-primary-500 font-semibold hover:gap-3 transition-all">
+          View all news
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+</section>

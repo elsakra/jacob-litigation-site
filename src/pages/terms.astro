@@ -1,0 +1,77 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import siteData from '@/data/site.json';
+
+const { company } = siteData;
+const lastUpdated = "January 1, 2026";
+---
+
+<BaseLayout title="Terms of Service" lightHero={true}>
+  <section class="pt-32 pb-16 bg-gradient-to-b from-primary-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-slate-900">
+        Terms of Service
+      </h1>
+      <p class="mt-4 text-slate-600">
+        Last updated: {lastUpdated}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-slate prose-lg max-w-none prose-headings:font-display">
+        <p class="lead">
+          Welcome to {company.name}. These Terms govern your use of our website and your communications with our firm. By using the site, you agree to these Terms.
+        </p>
+
+        <h2>No Legal Advice</h2>
+        <p>
+          Content on this website is provided for general informational purposes only and does not constitute legal advice. You should not act or refrain from acting based on any content without seeking appropriate legal or professional advice.
+        </p>
+
+        <h2>No Attorney–Client Relationship</h2>
+        <p>
+          Visiting this website or contacting us does not create an attorney–client relationship. An attorney–client relationship is only formed through a written engagement agreement signed by you and our firm.
+        </p>
+        <p>
+          Please do not send confidential or time-sensitive information through the website until an attorney–client relationship has been established.
+        </p>
+
+        <h2>Prior Results</h2>
+        <p>
+          Prior results do not guarantee a similar outcome. Results depend on the facts and applicable law for each matter.
+        </p>
+
+        <h2>Fees and Billing</h2>
+        <p>
+          Any fees, billing arrangements, and scope of representation are established in a separate engagement agreement. Some matters may require an advance retainer.
+        </p>
+
+        <h2>Website Use</h2>
+        <p>By using our website, you agree that:</p>
+        <ul>
+          <li>You will not misuse the site or attempt unauthorized access</li>
+          <li>You will not introduce malicious code or attempt to disrupt service</li>
+          <li>We may update the site and these Terms at any time</li>
+        </ul>
+
+        <h2>Third-Party Links</h2>
+        <p>
+          Our site may include links to third-party websites. We do not control or endorse the content of third-party sites and are not responsible for their practices.
+        </p>
+
+        <h2>Limitation of Liability</h2>
+        <p>To the extent permitted by law, {company.name} shall not be liable for indirect, incidental, or consequential damages arising from the use of our services or website.</p>
+
+        <h2>Contact Information</h2>
+        <p>Questions about these terms? Contact us:</p>
+        <p>
+          {company.name}<br />
+          Phone: {company.phone}<br />
+          Email: {company.email}
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

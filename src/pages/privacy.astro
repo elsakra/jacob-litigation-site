@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import siteData from '@/data/site.json';
+
+const { company } = siteData;
+const lastUpdated = "January 1, 2026";
+---
+
+<BaseLayout title="Privacy Policy" lightHero={true}>
+  <section class="pt-32 pb-16 bg-gradient-to-b from-primary-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-slate-900">
+        Privacy Policy
+      </h1>
+      <p class="mt-4 text-slate-600">
+        Last updated: {lastUpdated}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-slate prose-lg max-w-none prose-headings:font-display">
+        <p class="lead">
+          At {company.name}, we are committed to protecting your privacy and safeguarding information you share with us. This Privacy Policy explains how we collect, use, and protect information when you visit our website or contact our firm.
+        </p>
+
+        <h2>Information We Collect</h2>
+        
+        <h3>Information You Provide</h3>
+        <p>When you contact our firm or submit an inquiry, we may collect:</p>
+        <ul>
+          <li>Name and contact information</li>
+          <li>Details you choose to share about your matter</li>
+          <li>Preferences for communication</li>
+        </ul>
+
+        <h3>Automatic Information</h3>
+        <p>Our website may automatically collect limited technical information, such as:</p>
+        <ul>
+          <li>IP address, device type, and browser information</li>
+          <li>Pages visited and time spent on site</li>
+          <li>General referral/source information</li>
+        </ul>
+
+        <h2>How We Use Your Information</h2>
+        <p>Your information is used to:</p>
+        <ul>
+          <li>Respond to your inquiry and schedule a consultation</li>
+          <li>Provide information you request about our services</li>
+          <li>Improve our website experience and content</li>
+          <li>Comply with applicable legal obligations</li>
+        </ul>
+
+        <h2>Disclosure of Information</h2>
+        <p>We may share your information:</p>
+        <ul>
+          <li><strong>Service Providers:</strong> With vendors who help us operate the website and communications (under confidentiality obligations)</li>
+          <li><strong>Legal Requirements:</strong> If required by law, regulation, or a valid legal process</li>
+          <li><strong>With Your Authorization:</strong> For other purposes after obtaining your consent</li>
+        </ul>
+
+        <h2>Attorney–Client Privilege Notice</h2>
+        <p>
+          Contacting us through this website does not create an attorney–client relationship. Please do not send confidential or sensitive information until an attorney–client relationship has been established in writing.
+        </p>
+
+        <h2>Data Security</h2>
+        <p>We protect your information through:</p>
+        <ul>
+          <li>Reasonable administrative and technical safeguards</li>
+          <li>Access controls for internal systems</li>
+          <li>Best-effort monitoring and maintenance</li>
+        </ul>
+
+        <h2>Website Privacy</h2>
+        <p>Our website may collect:</p>
+        <ul>
+          <li>Information you provide through contact forms</li>
+          <li>Cookies and similar tracking technologies</li>
+          <li>Anonymous usage data for website improvement</li>
+        </ul>
+
+        <h2>Changes to This Policy</h2>
+        <p>We may update this Privacy Policy periodically. Changes will be posted on our website and, if significant, we will notify you directly.</p>
+
+        <h2>Contact Us</h2>
+        <p>For questions about this Privacy Policy or to exercise your rights:</p>
+        <p>
+          {company.name}<br />
+          Phone: {company.phone}<br />
+          Email: {company.email}
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

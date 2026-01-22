@@ -1,0 +1,115 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  headline?: string;
+  limit?: number;
+}
+
+const { headline = "Latest Insights", limit = 5 } = Astro.props;
+
+const posts = await getCollection('blog');
+const sortedPosts = posts
+  .sort((a, b) => {
+    const dateA = new Date(a.data.date || a.data.publishedAt || '1970-01-01');
+    const dateB = new Date(b.data.date || b.data.publishedAt || '1970-01-01');
+    return dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, limit);
+
+function getTypeColor(type?: string) {
+  switch(type?.toLowerCase()) {
+    case 'alert': return 'bg-primary-500 text-white';
+    case 'press': 
+    case 'press release': return 'bg-charcoal-900 text-white';
+    case 'article': return 'bg-primary-100 text-primary-700';
+    default: return 'bg-neutral-100 text-charcoal-700';
+  }
+}
+
+function formatDate(dateStr?: string): string {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+---
+
+<section class="bg-white py-20 lg:py-28 border-t border-neutral-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8" data-reveal>
+      <div>
+        <div class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-neutral-500 mb-4">
+          <span class="h-[3px] w-8 bg-primary-500"></span>
+          <span>Latest Insights</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-charcoal-950 tracking-[-0.02em]">
+          {headline}
+        </h2>
+      </div>
+      <a href="/blog" class="inline-flex items-center gap-2 text-primary-500 font-semibold hover:gap-3 transition-all">
+        View all
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+    
+    <!-- Insights List -->
+    <div class="divide-y divide-neutral-200" data-reveal-stagger>
+      {sortedPosts.map((post) => (
+        <a 
+          href={`/blog/${post.slug}`}
+          class="group flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8 py-6 lg:py-8 hover:bg-neutral-50 -mx-4 px-4 transition-all"
+        >
+          <!-- Title -->
+          <div class="flex-1 min-w-0">
+            <h3 class="font-display text-xl md:text-2xl lg:text-3xl text-charcoal-950 group-hover:text-primary-600 transition-colors leading-tight">
+              {post.data.title}
+            </h3>
+          </div>
+          
+          <!-- Meta info -->
+          <div class="flex items-center gap-4 lg:gap-6 flex-shrink-0">
+            {post.data.type && (
+              <span class:list={[
+                "px-3 py-1 text-xs font-semibold uppercase tracking-wider",
+                getTypeColor(post.data.type)
+              ]}>
+                {post.data.type}
+              </span>
+            )}
+            
+            {(post.data.date || post.data.publishedAt) && (
+              <span class="text-sm text-neutral-400 hidden sm:block">
+                {formatDate(post.data.date || post.data.publishedAt)}
+              </span>
+            )}
+            
+            <!-- Arrow -->
+            <div class="w-10 h-10 rounded-full border-2 border-neutral-200 group-hover:border-primary-500 group-hover:bg-primary-500 flex items-center justify-center transition-all">
+              <svg class="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    
+    <!-- View All Button (shows if there are more posts) -->
+    {posts.length > limit && (
+      <div class="mt-10 pt-8 border-t border-neutral-200" data-reveal>
+        <a 
+          href="/blog" 
+          class="inline-flex items-center gap-2 px-6 py-3 border-2 border-neutral-200 text-charcoal-800 font-semibold hover:border-primary-500 hover:text-primary-600 transition-all"
+        >
+          View all
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+</section>
